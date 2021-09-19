@@ -27,17 +27,19 @@ delta = 0.01
 plt.ylim(min_lon + delta, max_lon + delta)
 plt.xlim(min_lat + delta, max_lat + delta)
 
+
+
 deliveriable_points_by_drones = get_deliveriable_points_by_drones(df)
 not_deliveriable_points_by_drones = get_not_deliveriable_points_by_drones(df)
 
 # Plot the deposit
-plt.scatter(df.iloc[0]['latDeg'], df.iloc[0]['lonDeg'], marker='^', s=150)
+plt.scatter(df.iloc[0]['latDeg'], df.iloc[0]['lonDeg'], marker='^', s=150, color='black')
 
 # Plot the deliveriable point by drones
-plt.scatter(deliveriable_points_by_drones['latDeg'], deliveriable_points_by_drones['lonDeg'])
+plt.scatter(deliveriable_points_by_drones['latDeg'], deliveriable_points_by_drones['lonDeg'], color='green')
 
 # Plot the not deliveriable point by drones (only trucks)
-plt.scatter(not_deliveriable_points_by_drones['latDeg'], not_deliveriable_points_by_drones['lonDeg'], marker='s')
+plt.scatter(not_deliveriable_points_by_drones['latDeg'], not_deliveriable_points_by_drones['lonDeg'], marker='s', color='red')
 
 plt.show()
 
