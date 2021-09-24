@@ -1,11 +1,10 @@
 import matplotlib.pyplot as plt
 from graphics import *
+from solver import *
 from data_functions import load_data
-from solver import get_tsp_points, get_distance, get_fitness
 
 # Load data
 df = load_data('problems/example.csv')
-
 
 # Ploting the points
 plt.rcParams["figure.figsize"] = (20, 10)
@@ -16,11 +15,19 @@ draw_points(plt, df)
 tsp_route_points = get_tsp_points(df)
 fitness = get_fitness(df, tsp_route_points)
 
+drones_travels = get_drones_routes(df, tsp_route_points)
 
-draw_tsp_route(plt, df, tsp_route_points)
-
+print(drones_travels)
 print(tsp_route_points)
 print(int(fitness * 1000000))
+
+for dron_travel in drones_travels:
+    new_tsp = update_tsp_with_drone(tsp_route_points, dron_travel)
+    print(new_tsp)
+    tsp_route_points = new_tsp
+
+draw_tsp_route(plt, df, tsp_route_points)
+draw_drones_routes(plt, df, drones_travels)
 
 
 plt.show()

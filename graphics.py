@@ -15,7 +15,7 @@ def get_not_deliveriable_points_by_drones(data):
     filtered_data = data[(data['nodeType'] != 0) & ((data['altMeters'] != 0) | (data['parcelWtLbs'] > 5))]
     return filtered_data
 
-def get_tsp_coords(data, tsp_route_points):
+def get_coords_from_points(data, route_points):
     '''
     Dada una lista con el orden que deben ser visitadas las ciudades (ruta TSP)
     entrega las coordenadas de cada ciudad de la ruta
@@ -23,7 +23,7 @@ def get_tsp_coords(data, tsp_route_points):
     lat_tsp = []
     lon_tsp = []
 
-    for point in tsp_route_points:
+    for point in route_points:
         lat_tsp.append(data.iloc[point]['latDeg'])
         lon_tsp.append(data.iloc[point]['lonDeg'])
 
@@ -33,10 +33,14 @@ def draw_tsp_route(plt, data, tsp_route_points):
     '''
     Dibuja la ruta del tsp ingresada
     '''
-    x, y = get_tsp_coords(data, tsp_route_points)
+    x, y = get_coords_from_points(data, tsp_route_points)
     plt.plot(x, y, linewidth=1)
     plt.arrow(x[0], y[0], (x[1] - x[0]) / 2, (y[1] - y[0]) / 2, width=0.0005)
 
+def draw_drones_routes(plt, data, drones_routes):
+    for travel_tuple in drones_routes:
+        x, y = get_coords_from_points(data, travel_tuple)
+        plt.plot(x, y, "g--")
 
 def set_plot_limits(plt, data, delta=0.01):
     '''
