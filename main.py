@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
-from functions import *
+from graphics import *
+from solver import get_tsp_points
 
 # Settings of pyplot
 plt.rcParams["figure.figsize"] = (20, 10)
