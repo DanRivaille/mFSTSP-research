@@ -51,15 +51,6 @@ def set_plot_limits(plt, data, delta=0.01):
     plt.ylim(min_lon - delta, max_lon + delta)
     plt.xlim(min_lat - delta, max_lat + delta)
 
-
-def load_data(filename):
-    '''
-    Carga los datos
-    '''
-    names = ['nodeType', 'latDeg', 'lonDeg', 'altMeters', 'parcelWtLbs']
-    data = pd.read_csv(filename, names=names, skiprows=1, index_col=0)
-    return data
-
 def draw_points(plt, data):
     '''
     Dibuja los puntos en el grafico
