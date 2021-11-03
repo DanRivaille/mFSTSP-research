@@ -1,5 +1,6 @@
 import random
 import math
+from data_functions import get_distance, get_time
 
 def get_distance(nodes, index_origin, index_destiny):
     '''
@@ -13,20 +14,42 @@ def get_distance(nodes, index_origin, index_destiny):
     distance = math.hypot(x_origin - x_destiny, y_origin - y_destiny)
     return distance
 
-def get_fitness(nodes, tsp_route):
+def get_fitness(nodes, costs, tsp_route, uav_sorties):
     '''
     Obtiene el fitness de la solucion actual
     '''
-    sum_distances = 0
-    for i in range(1, len(tsp_route)):
-        sum_distances += get_distance(nodes, tsp_route[i - 1], tsp_route[i])
+    for node in tsp_route:
+        print("------------------------------------------\n")
+        print(f"Nodo actual: {node}\n")
+        print("Drones que se lanzan desde este punto: ")
 
-    return sum_distances
+        for dron_travel in uav_sorties:
+            uav_id, travel_tuple = dron_travel
+            launch_node, service_node, recovery_node = travel_tuple
+
+            if node == launch_node:
+                print(f"UAV {uav_id} - travel: {travel_tuple}")
+
+        print()
+        print("Drones que llegan en este punto: ")
+
+        for dron_travel in uav_sorties:
+            uav_id, travel_tuple = dron_travel
+            launch_node, service_node, recovery_node = travel_tuple
+
+            if node == recovery_node:
+                print(f"UAV {uav_id} - travel: {travel_tuple}")
+    return 0
+
+def get_full_time_dron_travel(nodes, costs, travel_tuple):
+    preparacion = 
+
 
 def get_tsp_points(nodes):
     '''
     Calcula la ruta tsp
     '''
+    return [0, 17, 10, 3, 11, 16, 22, 24, 2, 5, 21, 8, 6, 25, 0]
     quants_points_deliveriable = len(nodes) - 1
     tsp_route = random.sample(range(1, quants_points_deliveriable + 1), quants_points_deliveriable)
     tsp_route = [0] + tsp_route + [0]
@@ -74,6 +97,18 @@ def get_distance_dron_travel(nodes, travel_tuple):
     return distance_dron_travel
 
 def get_drones_routes(nodes, tsp_route):
+    return [(2, (0, 4, 17)),
+ (2, (17, 7, 10)),
+ (2, (10, 19, 3)),
+ (2, (3, 14, 11)),
+ (2, (16, 9, 24)),
+ (2, (5, 15, 21)),
+ (3, (17, 12, 10)),
+ (3, (3, 23, 11)),
+ (3, (22, 1, 24)),
+ (3, (5, 13, 21)),
+ (3, (6, 20, 25)),
+ (4, (17, 18, 10))]
     length = len(tsp_route)
     max_dron_flight = 0.05
     drones_routes = []
@@ -83,7 +118,7 @@ def get_drones_routes(nodes, tsp_route):
         distance_dron_travel = get_distance_dron_travel(nodes, travel_tuple)
 
         if distance_dron_travel < max_dron_flight:
-            drones_routes.append(travel_tuple)
+            drones_routes.append((2, travel_tuple))
 
     return drones_routes
 

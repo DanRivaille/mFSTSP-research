@@ -15,6 +15,31 @@ def load_data(filename):
 
     return data
 
+def load_costs_nodes(filename):
+    '''
+    Carga los costos (distancia y tiempo) de los viejes entre los nodos
+    '''
+    names = ['origin', 'destiny', 'time', 'distance']
+    data = pd.read_csv(filename, names=names, skiprows=1)
+
+    return data
+
+def get_distance(costs, origin_node, destiny_node):
+    '''
+    Obtiene la distancia entre los nodos "origin_node" y "destiny_node"
+    '''
+    distance_serie = costs[(costs['origin'] == origin_node)  & (costs['destiny'] == destiny_node)]
+    distance = distance_serie.distance.values[0]
+    return distance
+
+def get_time(costs, origin_node, destiny_node):
+    '''
+    Obtiene el tiempo entre los nodos "origin_node" y "destiny_node"
+    '''
+    time_serie = costs[(costs['origin'] == origin_node)  & (costs['destiny'] == destiny_node)]
+    time = time_serie.time.values[0]
+    return time
+
 def create_nodes_list(dataframe):
     nodes = []
 
@@ -23,3 +48,4 @@ def create_nodes_list(dataframe):
         nodes.append(new_node)
 
     return nodes
+

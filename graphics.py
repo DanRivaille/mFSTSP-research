@@ -27,9 +27,11 @@ def draw_tsp_route(plt, nodes, tsp_route_points):
 
 
 def draw_drones_routes(plt, nodes, drones_routes):
-    for travel_tuple in drones_routes:
+    color_routes = ["g--", "y--", "m--", "c--"]
+    for drone_travel in drones_routes:
+        id_drone, travel_tuple = drone_travel
         x, y = get_coords_from_points(nodes, travel_tuple)
-        plt.plot(x, y, "g--")
+        plt.plot(x, y, color_routes[id_drone - 2])
 
 
 ###------- Functions that work with dataframe of the nodes ------###

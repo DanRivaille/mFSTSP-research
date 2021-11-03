@@ -1,11 +1,13 @@
 import matplotlib.pyplot as plt
 from graphics import *
 from solver import *
-from data_functions import load_data, create_nodes_list
+from data_functions import *
 
+PLOT_ROUTES = False
 
 def main():
     # Load data
+    costs = load_costs_nodes('problems/example_truck_travel_data.csv')
     df = load_data('problems/example.csv')
     nodes = create_nodes_list(df)
 
@@ -16,23 +18,26 @@ def main():
 
     # TSP Route
     tsp_route_points = get_tsp_points(nodes)
-    fitness = get_fitness(nodes, tsp_route_points)
-
     drones_travels = get_drones_routes(nodes, tsp_route_points)
+    fitness = get_fitness(nodes, costs, tsp_route_points, drones_travels)
 
-    print(drones_travels)
-    print(tsp_route_points)
-    print(int(fitness * 1000000))
 
+    print("UAV's sorties: ")
     for dron_travel in drones_travels:
-        new_tsp = update_tsp_with_drone(tsp_route_points, dron_travel)
-        tsp_route_points = new_tsp
+        print(dron_travel)
 
-    draw_tsp_route(plt, nodes, tsp_route_points)
-    draw_drones_routes(plt, nodes, drones_travels)
+    print(f"TSP Tour: {tsp_route_points}")
 
+    #for dron_travel in drones_travels:
+        #travel_tuple = dron_travel[1]
+        #new_tsp = update_tsp_with_drone(tsp_route_points, travel_tuple
+        #tsp_route_points = new_tsp
 
-    plt.show()
+    if PLOT_ROUTES:
+        draw_tsp_route(plt, nodes, tsp_route_points)
+        draw_drones_routes(plt, nodes, drones_travels)
+
+        plt.show()
 
 
 if __name__ == '__main__':
