@@ -2,11 +2,13 @@ import matplotlib.pyplot as plt
 from graphics import *
 from solver import *
 from data_functions import *
+from drone_info_functions import load_dron_info
 
 PLOT_ROUTES = False
 
 def main():
     # Load data
+    load_dron_info('drones_types_info/drone101.csv')
     costs = load_costs_nodes('problems/example_truck_travel_data.csv')
     df = load_data('problems/example.csv')
     nodes = create_nodes_list(df)

@@ -1,8 +1,10 @@
+import pandas as pd
+
 drone_info = None
 
 def load_dron_info(filename):
     global drone_info
-    names = ['vehicleID', 'vehicleType', 'takeoffSpeed', 'cruiseSpeed', 'landingSpeed', 'yawRageDeg', 'cruiseAlt', 'capacity', 'launchTime', 'recoveryTime', 'serviceTime', 'batteryPower']
+    names = ['vehicleType', 'takeoffSpeed', 'cruiseSpeed', 'landingSpeed', 'yawRageDeg', 'cruiseAlt', 'capacity', 'launchTime', 'recoveryTime', 'serviceTime', 'batteryPower', 'range']
     drone_info = pd.read_csv(filename, skiprows=2, names=names)
 
 def getTakeoffSpeed():
@@ -37,11 +39,11 @@ def getBatteryPower():
     batteryPower = drone_info.iloc[1].batteryPower
     return batteryPower
 
-def gerServiceTimeDrone():
+def getServiceTimeDrone():
     serviceTimeDrone = drone_info.iloc[1].serviceTime
     return serviceTimeDrone
 
-def gerServiceTimeTruck():
+def getServiceTimeTruck():
     serviceTimeTruck = drone_info.iloc[0].serviceTime
     return serviceTimeTruck
 

@@ -24,7 +24,7 @@ def load_costs_nodes(filename):
 
     return data
 
-def get_distance(costs, origin_node, destiny_node):
+def get_distance_between_nodes(costs, origin_node, destiny_node):
     '''
     Obtiene la distancia entre los nodos "origin_node" y "destiny_node"
     '''
@@ -32,7 +32,7 @@ def get_distance(costs, origin_node, destiny_node):
     distance = distance_serie.distance.values[0]
     return distance
 
-def get_time(costs, origin_node, destiny_node):
+def get_time_between_nodes(costs, origin_node, destiny_node):
     '''
     Obtiene el tiempo entre los nodos "origin_node" y "destiny_node"
     '''

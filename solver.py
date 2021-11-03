@@ -1,6 +1,7 @@
 import random
 import math
-from data_functions import get_distance, get_time
+from data_functions import get_distance_between_nodes, get_time_between_nodes
+from drone_info_functions import *
 
 def get_distance(nodes, index_origin, index_destiny):
     '''
@@ -18,17 +19,23 @@ def get_fitness(nodes, costs, tsp_route, uav_sorties):
     '''
     Obtiene el fitness de la solucion actual
     '''
-    for node in tsp_route:
+    time = 0
+    for index, node in enumerate(tsp_route):
+        if index != 0:
+            time += get_time_between_nodes(costs, tsp_route[index - 1], node)
+
         print("------------------------------------------\n")
-        print(f"Nodo actual: {node}\n")
+        print(f"Nodo actual: {node} - tiempo actual {time}\n")
         print("Drones que se lanzan desde este punto: ")
+
 
         for dron_travel in uav_sorties:
             uav_id, travel_tuple = dron_travel
             launch_node, service_node, recovery_node = travel_tuple
 
             if node == launch_node:
-                print(f"UAV {uav_id} - travel: {travel_tuple}")
+                time_travel = get_time_dron_travel(nodes, costs, travel_tuple)
+                print(f"UAV {uav_id} - travel: {travel_tuple} - tiempo {time_travel}")
 
         print()
         print("Drones que llegan en este punto: ")
@@ -41,8 +48,18 @@ def get_fitness(nodes, costs, tsp_route, uav_sorties):
                 print(f"UAV {uav_id} - travel: {travel_tuple}")
     return 0
 
-def get_full_time_dron_travel(nodes, costs, travel_tuple):
-    preparacion = 
+def get_time_dron_travel(nodes, costs, travel_tuple):
+    preparacion = getLaunchTime()
+    elevacion_camion = getCruiseAlt() / getTakeoffSpeed()
+    viaje_ida = get_distance_between_nodes(costs, travel_tuple[0], travel_tuple[1]) / getCruiseSpeed()
+    descenso_cliente = getCruiseAlt() / getLandingSpeed()
+    entrega = getServiceTimeDrone()
+    elevacion_cliente = getCruiseAlt() / getTakeoffSpeed()
+    viaje_vuelta = get_distance_between_nodes(costs, travel_tuple[1], travel_tuple[2]) / getCruiseSpeed()
+
+    travel_time = preparacion + elevacion_camion + viaje_ida
+    travel_time += descenso_cliente + entrega + elevacion_cliente + viaje_vuelta
+    return travel_time
 
 
 def get_tsp_points(nodes):
