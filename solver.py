@@ -39,12 +39,11 @@ def get_fitness(nodes, costs, tsp_route, uav_sorties):
     t_service_truck = getServiceTimeTruck()
     t_salida = time
     t_etapas = get_t_etapas()
-    for index, node in enumerate(tsp_route):
+    for index, node in enumerate(tsp_route[:-1]):
         is_delivery_done = False
 
         # Se actualiza el tiempo de viaje, con el viaje entre los nodos
         if index != 0:
-            print(f'{time} - Viajando del nodo { tsp_route[index - 1] } al nodo { node }')
             time += get_time_between_nodes(costs, tsp_route[index - 1], node)
             print(f'{time} - LLegando al nodo { node }')
 
@@ -59,34 +58,52 @@ def get_fitness(nodes, costs, tsp_route, uav_sorties):
 
             # Se calcula el tiempo absoluto
             t_absolute = t_relative + t_salida
+            print(f'{t_absolute} - UAV llega al nodo {node}')
 
             # Se calcula el tiempo en idle 
             t_etapas[ET_IDLE] = time - t_etapas[ET_DESCE_TRUCK] - t_absolute
+            print(t_etapas[ET_IDLE])
 
-            # Si el UAV llego antes que el camion
-            if t_etapas[ET_IDLE] < 0:
-                if -t_etapas[ET_IDLE] > t_service_truck:
-                    # Se realiza el delivery del camion y luego se recupera el uav
-                    time += t_service_truck
-                    time += sum(t_etapas[8:])
-                else:
-                    # Se recupera el uav y luego se realiza el delivery del camion
-                    time += sum(t_etapas[8:])
-                    time += t_service_truck
+            # Si el camion llego antes que el UAV y tiene tiempo de realizar la entrega
+            if t_etapas[ET_IDLE] < 0 and -t_etapas[ET_IDLE] > t_service_truck:
+                # Se realiza el delivery del camion y luego se recupera el uav
+                print(f'{time} - El camion comienza a realizar su entrega')
+                time += t_service_truck
+                print(f'{time} - El camion termina de realizar su entrega')
+                print(f'{time} - Se comienza a recuperar el UAV')
+                time += sum(t_etapas[8:])
+                print(f'{time} - Se recupera el UAV')
+            else:
+                # Se recupera el uav y luego se realiza el delivery del camion
+                print(f'{time} - Se comienza a recuperar el UAV')
+                time += sum(t_etapas[8:])
+                print(f'{time} - Se recupera el UAV')
+                print(f'{time} - El camion comienza a realizar su entrega')
+                time += t_service_truck
+                print(f'{time} - El camion termina de realizar su entrega')
 
-                is_delivery_done = True
+            is_delivery_done = True
 
         
         # Se verifica si es que se lanza un UAV desde este nodo
         travel_tuple_uav_go_out = get_travel_tuple_from_uav_go_out(uav_sorties, node)
         if travel_tuple_uav_go_out is not None:
             t_salida = time
+            print(f'{time} - Se comienza a lanzar un UAV desde el nodo {node}')
             time += t_etapas[ET_PREPARACION]
+            print(f'{time} - El UAV deja el nodo { node }')
 
         # Si no se ha realizado todavia el delivery, se realiza
         if not is_delivery_done:
+            print(f'{time} - El camion comienza a realizar su entrega')
             time += t_service_truck
+            print(f'{time} - El camion termina de realizar su entrega')
 
+
+        print(f'{time} - Dejando el nodo { node }\n')
+
+    print(f'{time} - LLegando al deposito')
+    print(f'Tiempo total: {time}')
 
     return time
 
