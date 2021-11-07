@@ -150,7 +150,8 @@ def get_tsp_points(nodes):
     '''
     Calcula la ruta tsp
     '''
-    return [0, 17, 10, 3, 11, 16, 22, 24, 2, 5, 21, 8, 6, 25, 0]
+    #return [0, 17, 10, 3, 11, 16, 22, 24, 2, 5, 21, 8, 6, 25, 0]
+    return [0, 18, 12, 7, 10, 19, 3, 11, 16, 22, 24, 2, 5, 21, 8, 6, 25, 0]
     quants_points_deliveriable = len(nodes) - 1
     tsp_route = random.sample(range(1, quants_points_deliveriable + 1), quants_points_deliveriable)
     tsp_route = [0] + tsp_route + [0]
@@ -205,6 +206,16 @@ def get_drones_routes(nodes, tsp_route):
     '''
     Ejecuta el algoritmo que calcula las rutas de los UAV para la instancia del problema
     '''
+    return [(2, (0, 4, 18)),
+ (2, (18, 17, 12)),
+ (2, (19, 14, 3)),
+ (2, (3, 23, 11)),
+ (2, (16, 9, 22)),
+ (2, (22, 1, 24)),
+ (2, (24, 15, 2)),
+ (2, (5, 13, 21)),
+ (2, (6, 20, 25))]
+            '''
     return [(2, (0, 4, 17)),
  (2, (17, 7, 10)),
  (2, (10, 19, 3)),
@@ -217,6 +228,7 @@ def get_drones_routes(nodes, tsp_route):
  (3, (5, 13, 21)),
  (3, (6, 20, 25)),
  (4, (17, 18, 10))]
+ '''
     length = len(tsp_route)
     max_dron_flight = 0.05
     drones_routes = []
