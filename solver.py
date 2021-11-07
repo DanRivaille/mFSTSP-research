@@ -44,9 +44,9 @@ def get_fitness(nodes, costs, tsp_route, uav_sorties):
 
         # Se actualiza el tiempo de viaje, con el viaje entre los nodos
         if index != 0:
-            printf(f'{time} - Viajando del nodo { tsp_route[index - 1] } al nodo { node }')
+            print(f'{time} - Viajando del nodo { tsp_route[index - 1] } al nodo { node }')
             time += get_time_between_nodes(costs, tsp_route[index - 1], node)
-            printf(f'{time} - LLegando al nodo { node }')
+            print(f'{time} - LLegando al nodo { node }')
 
         # Se verifica si es que llegó un UAV en este nodo
         travel_tuple_uav_reaches = get_travel_tuple_from_uav_reaches(uav_sorties, node)
@@ -122,7 +122,7 @@ def get_time_dron_travel(costs, origin_travel, destiny_travel):
     '''
     Obtiene el tiempo de viaje de un UAV entre dos nodos
     '''
-    travel_time = get_distance_between_nodes(costs, origin_travel, service_travel) / getCruiseSpeed()
+    travel_time = get_distance_between_nodes(costs, origin_travel, destiny_travel) / getCruiseSpeed()
     return travel_time
 
 def get_t_etapas():
@@ -207,15 +207,15 @@ def get_drones_routes(nodes, tsp_route):
     Ejecuta el algoritmo que calcula las rutas de los UAV para la instancia del problema
     '''
     return [(2, (0, 4, 18)),
- (2, (18, 17, 12)),
- (2, (19, 14, 3)),
- (2, (3, 23, 11)),
- (2, (16, 9, 22)),
- (2, (22, 1, 24)),
- (2, (24, 15, 2)),
- (2, (5, 13, 21)),
- (2, (6, 20, 25))]
-            '''
+        (2, (18, 17, 12)),
+        (2, (19, 14, 3)),
+        (2, (3, 23, 11)),
+        (2, (16, 9, 22)),
+        (2, (22, 1, 24)),
+        (2, (24, 15, 2)),
+        (2, (5, 13, 21)),
+        (2, (6, 20, 25))]
+    '''
     return [(2, (0, 4, 17)),
  (2, (17, 7, 10)),
  (2, (10, 19, 3)),
@@ -228,7 +228,7 @@ def get_drones_routes(nodes, tsp_route):
  (3, (5, 13, 21)),
  (3, (6, 20, 25)),
  (4, (17, 18, 10))]
- '''
+    '''
     length = len(tsp_route)
     max_dron_flight = 0.05
     drones_routes = []
