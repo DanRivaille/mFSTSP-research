@@ -223,6 +223,7 @@ def get_drones_routes(nodes, tsp_route):
     '''
     Ejecuta el algoritmo que calcula las rutas de los UAV para la instancia del problema
     '''
+    '''
     return [(2, (0, 4, 18)),
         (2, (18, 17, 12)),
         (2, (19, 14, 3)),
@@ -245,7 +246,6 @@ def get_drones_routes(nodes, tsp_route):
  (3, (5, 13, 21)),
  (3, (6, 20, 25)),
  (4, (17, 18, 10))]
-    '''
     length = len(tsp_route)
     max_dron_flight = 0.05
     drones_routes = []

@@ -4,7 +4,7 @@ from solver import *
 from data_functions import *
 from drone_info_functions import load_dron_info
 
-PLOT_ROUTES = False
+PLOT_ROUTES = True
 
 def main():
     # Load data
