@@ -3,6 +3,7 @@ from graphics import *
 from solver import *
 from data_functions import *
 from drone_info_functions import load_dron_info
+from objective_function import get_fitness
 
 PLOT_ROUTES = True
 
