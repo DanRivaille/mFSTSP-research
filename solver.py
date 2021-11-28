@@ -2,7 +2,6 @@ import random
 import math
 from data_functions import get_distance_between_nodes, get_time_between_nodes
 from drone_info_functions import *
-from objective_function import get_distance_dron_travel
 
 def get_tsp_points(nodes):
     '''
@@ -78,15 +77,17 @@ def get_drones_routes(nodes, tsp_route):
  (3, (5, 13, 21)),
  (3, (6, 20, 25)),
  (4, (17, 18, 10))]
+'''
     length = len(tsp_route)
     max_dron_flight = 0.05
     drones_routes = []
 
     for i in range(0, length - 2):
         travel_tuple = (tsp_route[i], tsp_route[i + 1], tsp_route[i + 2])
-        distance_dron_travel = get_distance_dron_travel(nodes, travel_tuple)
+        #distance_dron_travel = get_distance_dron_travel(nodes, travel_tuple)
 
         if distance_dron_travel < max_dron_flight:
             drones_routes.append((2, travel_tuple))
 
     return drones_routes
+'''

@@ -5,7 +5,7 @@ from data_functions import *
 from drone_info_functions import load_dron_info
 from objective_function import get_fitness
 
-PLOT_ROUTES = True
+PLOT_ROUTES = False
 
 def main():
     # Load data
@@ -13,6 +13,9 @@ def main():
     costs = load_costs_nodes('problems/example_truck_travel_data.csv')
     df = load_data('problems/example.csv')
     nodes = create_nodes_list(df)
+    print(nodes[2])
+
+    n_uavs = 3
 
     # Ploting the points
     plt.rcParams["figure.figsize"] = (20, 10)
@@ -22,7 +25,7 @@ def main():
     # TSP Route
     tsp_route_points = get_tsp_points(nodes)
     drones_travels = get_drones_routes(nodes, tsp_route_points)
-    fitness = get_fitness(nodes, costs, tsp_route_points, drones_travels)
+    fitness = get_fitness(nodes, costs, tsp_route_points, drones_travels, n_uavs)
 
 
     print("UAV's sorties: ")
