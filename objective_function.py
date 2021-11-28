@@ -29,6 +29,7 @@ def get_fitness(nodes, costs, tsp_route, uav_sorties, n_uavs):
     for i, node, in enumerate(tsp_route):
         if i != 0:
             time += get_time_between_nodes(costs, tsp_route[i - 1], node)
+            print(f'{time} - Llegando al nodo {node}')
 
         uavs_reaches = get_uavs_reaches(uav_sorties, node)
         uavs_go_out = get_uavs_go_out(uav_sorties, node)
@@ -40,11 +41,21 @@ def get_fitness(nodes, costs, tsp_route, uav_sorties, n_uavs):
         # Mientras hayan nodos esperando
         while (len(uavs_reaches) != 0) or (len(uavs_go_out) != 0):
 
-            # Obtengo un uav con bateria critica
+            # Obtengo un uav con bateria critica FALTA IMPLEMENTAR LA BATERIA!!!
             index_uav = get_low_battery(nodes, costs, uavs_reaches, idle_times)
             if index_uav >= 0:
                 time = recover_uav(uavs_reaches, launch_times, idle_times, available_times, index_uav, time)
                 update_idle_times(uavs_reaches, idle_times, is_going=False)
+                continue
+
+            # Obtengo una tupla de un uav que llega y sale en este mismo nodo
+            indexes_uavs = get_reaches_go(uavs_reaches, uavs_go_out)
+            if indexes_uavs != None:
+                time = recover_uav(uavs_reaches, launch_times, idle_times, available_times, indexes_uavs[0], time)
+                update_idle_times(uavs_reaches, idle_times, is_going=False)
+
+                time = launch_uav(uavs_go_out, launch_times, indexes_uavs[1], time)
+                update_idle_times(uavs_reaches, idle_times, is_going=True)
                 continue
 
             # Obtengo un uav que sale del nodo
@@ -62,9 +73,11 @@ def get_fitness(nodes, costs, tsp_route, uav_sorties, n_uavs):
                 continue
 
         # Realizo el delivery
-        time += t_service_truck
+        if i != len(tsp_route) - 1:
+            print(f'{time} - Realizando delivery')
+            time += t_service_truck
 
-
+    print(f'Tiempo total: {time}')
     return time
 
 
@@ -197,7 +210,7 @@ def recover_uav(uavs_reaches, launch_times, idle_times, available_times, index_u
     print(f'{time} - Recogiendo uav {uavs_reaches[index_uav]}')
     # Actualizo el tiempo actual
     time += getRecoveryTime()
-    # Se deberia sumar tambien el descenso camion???
+    time += getCruiseAlt() / getLandingSpeed() 
 
     # Obtengo el uav
     uav = uavs_reaches[index_uav]

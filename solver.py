@@ -7,7 +7,7 @@ def get_tsp_points(nodes):
     '''
     Calcula la ruta tsp
     '''
-    return [0, 17, 10, 3, 11, 16, 22, 24, 2, 5, 21, 8, 6, 25, 0]
+    return [0, 17, 10, 3, 11, 16, 22, 24, 2, 5, 21, 8, 6, 25, 26]
     #return [0, 18, 12, 7, 10, 19, 3, 11, 16, 22, 24, 2, 5, 21, 8, 6, 25, 0]
     quants_points_deliveriable = len(nodes) - 1
     tsp_route = random.sample(range(1, quants_points_deliveriable + 1), quants_points_deliveriable)

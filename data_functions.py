@@ -28,6 +28,13 @@ def get_distance_between_nodes(costs, origin_node, destiny_node):
     '''
     Obtiene la distancia entre los nodos "origin_node" y "destiny_node"
     '''
+    last_node = costs.iloc[-1].origin + 1
+    if origin_node == last_node:
+        origin_node = 0
+
+    if destiny_node == last_node:
+        destiny_node = 0
+
     distance_serie = costs[(costs['origin'] == origin_node)  & (costs['destiny'] == destiny_node)]
     distance = distance_serie.distance.values[0]
     return distance
@@ -36,6 +43,13 @@ def get_time_between_nodes(costs, origin_node, destiny_node):
     '''
     Obtiene el tiempo entre los nodos "origin_node" y "destiny_node"
     '''
+    last_node = costs.iloc[-1].origin + 1
+    if origin_node == last_node:
+        origin_node = 0
+
+    if destiny_node == last_node:
+        destiny_node = 0
+
     time_serie = costs[(costs['origin'] == origin_node)  & (costs['destiny'] == destiny_node)]
     time = time_serie.time.values[0]
     return time
@@ -46,6 +60,9 @@ def create_nodes_list(dataframe):
     for i in range(len(dataframe)):
         new_node = Node(dataframe.iloc[i], i)
         nodes.append(new_node)
+
+    new_node = Node(dataframe.iloc[0], len(nodes))
+    nodes.append(new_node)
 
     return nodes
 

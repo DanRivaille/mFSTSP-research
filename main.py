@@ -13,7 +13,6 @@ def main():
     costs = load_costs_nodes('problems/example_truck_travel_data.csv')
     df = load_data('problems/example.csv')
     nodes = create_nodes_list(df)
-    print(nodes[2])
 
     n_uavs = 3
 
