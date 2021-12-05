@@ -7,12 +7,11 @@ def get_tsp_points(nodes):
     '''
     Calcula la ruta tsp
     '''
-    return [0, 17, 10, 3, 11, 16, 22, 24, 2, 5, 21, 8, 6, 25, 26]
-    #return [0, 18, 12, 7, 10, 19, 3, 11, 16, 22, 24, 2, 5, 21, 8, 6, 25, 0]
+    return [0, 17, 10, 3, 11, 16, 22, 24, 2, 5, 21, 8, 6, 25, 26]       # Ruta con 3 uavs
+    #return [0, 18, 12, 7, 10, 19, 3, 11, 16, 22, 24, 2, 5, 21, 8, 6, 25, 0]    # Ruta con 1 uav
     quants_points_deliveriable = len(nodes) - 1
     tsp_route = random.sample(range(1, quants_points_deliveriable + 1), quants_points_deliveriable)
     tsp_route = [0] + tsp_route + [0]
-    #tsp_route = [0, 4, 8, 6, 20, 25, 17, 18, 12, 7, 10, 3, 19, 14, 23, 11, 9, 16, 22, 24, 21, 2, 5, 15, 13, 1, 0]
 
     is_improve = True
     while is_improve:
@@ -77,17 +76,4 @@ def get_drones_routes(nodes, tsp_route):
  (3, (5, 13, 21)),
  (3, (6, 20, 25)),
  (4, (17, 18, 10))]
-'''
-    length = len(tsp_route)
-    max_dron_flight = 0.05
-    drones_routes = []
 
-    for i in range(0, length - 2):
-        travel_tuple = (tsp_route[i], tsp_route[i + 1], tsp_route[i + 2])
-        #distance_dron_travel = get_distance_dron_travel(nodes, travel_tuple)
-
-        if distance_dron_travel < max_dron_flight:
-            drones_routes.append((2, travel_tuple))
-
-    return drones_routes
-'''

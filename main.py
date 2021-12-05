@@ -33,16 +33,10 @@ def main():
 
     print(f"TSP Tour: {tsp_route_points}")
 
-    #for dron_travel in drones_travels:
-        #travel_tuple = dron_travel[1]
-        #new_tsp = update_tsp_with_drone(tsp_route_points, travel_tuple
-        #tsp_route_points = new_tsp
-
     if PLOT_ROUTES:
         draw_tsp_route(plt, nodes, tsp_route_points)
         draw_drones_routes(plt, nodes, drones_travels)
 
-        plt.show()
 
 
 if __name__ == '__main__':

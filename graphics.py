@@ -27,6 +27,9 @@ def draw_tsp_route(plt, nodes, tsp_route_points):
 
 
 def draw_drones_routes(plt, nodes, drones_routes):
+    '''
+    Dibuja las rutas de los drones con diferentes colores
+    '''
     color_routes = ["g--", "y--", "m--", "c--"]
     for drone_travel in drones_routes:
         id_drone, travel_tuple = drone_travel

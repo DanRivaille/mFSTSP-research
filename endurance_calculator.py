@@ -15,7 +15,9 @@ def Thrust(m, Vair):  # MATTERNET M2 Weight without payload: 9.5 Kg
 
 
 def give_endurance(distance_ij, distance_jk, parcelWtLbs, Etype):
-
+    '''
+    Obtiene la duracion restante de un uav
+    '''
     # for [v,i,j,k] in P:
     p = getTakeoffSpeed()
     q = getCruiseSpeed()
@@ -117,4 +119,5 @@ def give_endurance(distance_ij, distance_jk, parcelWtLbs, Etype):
         print('ERROR: Sorry! Wrong endurance type.')
         exit()
 
-    return endurance
+    # Se le resta el tiempo minimo requerido para que quede el tiempo restante
+    return endurance - minimum_time_required

@@ -112,6 +112,9 @@ def get_uavs_go_out(uav_sorties, node):
     return uavs_go_out
 
 def get_intersection(uavs_reaches, uavs_go_out):
+    '''
+    Obtiene los nodos que llegan y salen
+    '''
     intersection = []
 
     # Se obtiene la interseccion entre las dos listas
@@ -174,6 +177,9 @@ def get_available_times(costs, n_uavs, uavs_reaches, launch_times):
     return available_times
 
 def get_idle_times(n_uavs, uavs_reaches, available_times, time):
+    '''
+    Obtiene los tiempos que han estado esperando los uavs que llegan al nodo
+    '''
     idle_times = [-1] * n_uavs
 
     for uav in uavs_reaches:
@@ -207,6 +213,10 @@ def get_low_battery(nodes, costs, uavs_reaches, idle_times):
     return -1
 
 def recover_uav(uavs_reaches, launch_times, idle_times, available_times, index_uav, time):
+    '''
+    Realiza la recuperacion de un uav, actualizando el tiempo actual, y algunas
+    variables de los uavs
+    '''
     print(f'{time} - Recogiendo uav {uavs_reaches[index_uav]}')
     # Actualizo el tiempo actual
     time += getRecoveryTime()
@@ -227,6 +237,9 @@ def recover_uav(uavs_reaches, launch_times, idle_times, available_times, index_u
     return time
 
 def update_idle_times(uavs_reaches, idle_times, is_going):
+    '''
+    Actualiza los tiempos idle de los nodos que llegan
+    '''
     if is_going:
         new_time = getLaunchTime()
     else:
@@ -238,6 +251,9 @@ def update_idle_times(uavs_reaches, idle_times, is_going):
         idle_times[id_uav - 2] += new_time
 
 def get_reaches_go(uavs_reaches, uavs_go_out):
+    '''
+    Obtiene un uav que llega y sale en este mismo nodo
+    '''
     intersection = get_intersection(uavs_reaches, uavs_go_out)
 
     if len(intersection) != 0:
@@ -246,6 +262,10 @@ def get_reaches_go(uavs_reaches, uavs_go_out):
         return None
 
 def launch_uav(uavs_go_out, launch_times, index_uav, time):
+    '''
+    Realiza el lanzamiento de un uav, actualizando el tiempo actual, y algunas
+    variables de los uavs
+    '''
     print(f'{time} - Lanzando uav {uavs_go_out[index_uav]}')
     uav = uavs_go_out[index_uav]
     id_uav = uav[0]
@@ -261,12 +281,18 @@ def launch_uav(uavs_go_out, launch_times, index_uav, time):
     return time
 
 def get_go(uavs_go_out):
+    '''
+    Obtiene un uav que se va en este nodo
+    '''
     if len(uavs_go_out) != 0:
         return 0
     else:
         return -1
 
 def get_min_index(available_times):
+    '''
+    Obtiene el indice del uav que llego primero al nodo
+    '''
     i = 0
     min_t = available_times[0]
 
@@ -278,6 +304,9 @@ def get_min_index(available_times):
     return i
 
 def get_reach(uavs_reaches, available_times):
+    '''
+    Obtiene el indice del uav que llego primero al nodo actual
+    '''
     if len(uavs_reaches) != 0:
         # Se obtiene el que llego primero al nodo
         index = get_min_index(available_times)

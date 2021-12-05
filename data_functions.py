@@ -1,11 +1,6 @@
 import pandas as pd
 from node import Node
 
-def scale_data(data, scale_factor=1000000):
-    data['latDeg'] = data['latDeg'] * scale_factor
-    data['lonDeg'] = data['lonDeg'] * scale_factor
-    return data
-
 def load_data(filename):
     '''
     Carga los datos y devuelve un dataframe de pandas
@@ -55,6 +50,9 @@ def get_time_between_nodes(costs, origin_node, destiny_node):
     return time
 
 def create_nodes_list(dataframe):
+    '''
+    Crea una lista de 'Node' a partir del dataframe
+    '''
     nodes = []
 
     for i in range(len(dataframe)):
